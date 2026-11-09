@@ -1,4 +1,21 @@
 #!/bin/bash
+echo "======= Checking System Dependencies ======="
+
+# Check if the kernel disk image already exists, if not, download it inside the live terminal
+if [ ! -f "/workspace/micro_nt_kernel.img" ]; then
+    echo "💾 Custom Windows Kernel Image not found locally."
+    echo "📥 Downloading compressed NT image to workspace (this may take a moment)..."
+    
+    # REPLACE THE URL BELOW WITH YOUR ACTUAL STORAGE DRIVE OR HOSTING LINK
+    curl -L -# -o /workspace/micro_nt_kernel.img "https://example.com"
+    
+    if [ $? -ne 0 ]; then
+        echo "❌ ERROR: Download failed. Check your URL link in scripts/codespaces_boot.sh"
+        exit 1
+    fi
+    echo "✅ Download complete!"
+fi
+
 echo "======= Starting Custom OS Environment Display Pipeline ======="
 
 # 1. Start a virtual frame buffer (display) in the background
@@ -13,7 +30,7 @@ sleep 2
 echo "======= Booting Ultra-Stripped 64-bit Windows NT Kernel ======="
 echo "Anti-Cheat Obfuscation: Active"
 
-# 3. Launch QEMU with deep hardware virtualization spoofing to bypass Hyperion Anti-Cheat
+# 3. Launch QEMU with hardware virtualization spoofing to bypass Hyperion Anti-Cheat
 qemu-system-x86_64 \
     -m 2G \
     -smp cores=2 \
