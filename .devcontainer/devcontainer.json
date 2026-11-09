@@ -1,0 +1,24 @@
+{
+    "name": "Custom Micro-NT OS Container",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "forwardPorts":,
+    "portsAttributes": {
+        "6080": {
+            "label": "Custom OS Gaming Desktop",
+            "onAutoForward": "openBrowser"
+        }
+    },
+    "customizations": {
+        "codespaces": {
+            "openFiles": ["README.md"]
+        }
+    },
+    "runArgs": [
+        "--device=/dev/kvm",
+        "--device=/dev/net/tun",
+        "&"
+    ],
+    "postCreateCommand": "chmod +x scripts/codespaces_boot.sh"
+}
