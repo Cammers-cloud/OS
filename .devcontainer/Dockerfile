@@ -17,9 +17,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /workspace
 
-# Download a stripped, minimal 64-bit NT WinPE raw disk image (~350MB)
-# Replace the URL placeholder below with your self-hosted minimal NT/WinPE .img file URL
-RUN curl -L -o /workspace/micro_nt_kernel.img "https://example.com" || \
-    echo "Placeholder: Ensure you place your stripped 64-bit Windows PE disk image at /workspace/micro_nt_kernel.img"
-
 ENTRYPOINT ["/bin/bash"]
