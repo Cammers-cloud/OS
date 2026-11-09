@@ -2,8 +2,9 @@ FROM debian:stable-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install QEMU, UEFI firmware (OVMF), noVNC display server, and networking utilities
+# Added 'git' alongside our emulation and streaming dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
     qemu-system-x86 \
     ovmf \
     novnc \
