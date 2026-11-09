@@ -15,10 +15,5 @@
             "openFiles": ["README.md"]
         }
     },
-    "runArgs": [
-        "--device=/dev/kvm",
-        "--device=/dev/net/tun",
-        "&"
-    ],
     "postCreateCommand": "chmod +x scripts/codespaces_boot.sh"
 }
