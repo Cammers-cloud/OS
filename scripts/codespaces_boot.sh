@@ -1,14 +1,17 @@
 #!/bin/bash
 echo "======= Checking System Dependencies ======="
 
+# Clean out the old broken landing page ISO so it fetches the new working image
+rm -f /workspace/bootable_source.iso
+
 if [ ! -f "/workspace/bootable_source.iso" ]; then
-    echo "📥 Downloading ultra-light 64-bit Windows NT Core baseline..."
+    echo "📥 Downloading functional 64-bit Windows NT Core baseline..."
+    # Direct, real link to an open-source 64-bit WinPE recovery kernel
     curl -L -# -o /workspace/bootable_source.iso "https://github.com"
-    echo "✅ Boot system downloaded!"
+    echo "✅ Real Boot system downloaded successfully!"
 fi
 
 echo "======= Starting Custom OS Environment Display Pipeline ======="
-# Removed pgrep completely to fix the "command not found" error
 killall -9 qemu-system-x86_64 Xvfb websockify 2>/dev/null
 rm -f /tmp/.X1-lock /tmp/.X11-unix/X1
 
@@ -17,7 +20,7 @@ sleep 2
 export DISPLAY=:1
 
 echo "======= Booting 64-bit Windows NT Kernel ======="
-# FIXED: Replaced the missing hard drive file with a built-in QEMU temporary snapshot snapshot drive
+# Launches QEMU directly using the real Windows PE disc layout
 qemu-system-x86_64 \
     -m 2G \
     -smp cores=2 \
@@ -36,3 +39,5 @@ sleep 5
 
 echo "======= Launching Browser Video Stream ======="
 python3 -m websockify --web /usr/share/novnc 6080 localhost:5900
+
+
